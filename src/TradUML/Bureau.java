@@ -2,6 +2,7 @@ package TradUML;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Bureau {
     private int id;
@@ -45,5 +46,18 @@ public class Bureau {
 
     public void setEmploye(List<Employe> employe) {
         this.employe = employe;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bureau bureau = (Bureau) o;
+        return Objects.equals(sigle, bureau.sigle);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sigle);
     }
 }
