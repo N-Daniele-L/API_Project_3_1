@@ -22,7 +22,7 @@ public class Bureau {
      */
     private String sigle;
     /**
-     * numéro de téléphone du bureau
+     * numéro de telephone du bureau
      */
     private String tel;
     /**
