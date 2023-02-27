@@ -1,5 +1,6 @@
 package TradUML;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,7 @@ public class Message {
     /**
      * date d'envoi du message
      */
-    private Date dateEnvoi;
+    private LocalDate dateEnvoi;
     /**
      * employe qui a envoyer le message
      */
@@ -49,7 +50,7 @@ public class Message {
      * @param dateEnvoi date d'envoi du message
      * @param emetteur  employe qui envoie le message
      */
-    public Message(int id_mess, String objet, String contenu, Date dateEnvoi, Employe emetteur) {
+    public Message(int id_mess, String objet, String contenu, LocalDate dateEnvoi, Employe emetteur) {
         this.id_mess = id_mess;
         this.objet = objet;
         this.contenu = contenu;
@@ -116,7 +117,7 @@ public class Message {
      *
      * @return date d'envoi du message
      */
-    public Date getDateEnvoi() {
+    public LocalDate getDateEnvoi() {
         return dateEnvoi;
     }
 
@@ -125,7 +126,7 @@ public class Message {
      *
      * @param dateEnvoi modifie la date d'envoi du message
      */
-    public void setDateEnvoi(Date dateEnvoi) {
+    public void setDateEnvoi(LocalDate dateEnvoi) {
         this.dateEnvoi = dateEnvoi;
     }
 
