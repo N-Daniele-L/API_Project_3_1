@@ -151,7 +151,6 @@ public class Bureau {
                 "id=" + id_bur +
                 ", sigle='" + sigle + '\'' +
                 ", tel='" + tel + '\'' +
-                ", employe=" + employe +
                 '}';
     }
 }

@@ -198,7 +198,7 @@ public class Employe {
                 ", mail='" + mail + '\'' +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
-                ", msg=" + msg +
+                ", bureau=" + bureau +
                 '}';
     }
 }
