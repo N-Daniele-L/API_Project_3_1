@@ -198,7 +198,6 @@ public class Employe {
                 ", mail='" + mail + '\'' +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
-                ", bureau=" + bureau +
                 ", msg=" + msg +
                 '}';
     }
