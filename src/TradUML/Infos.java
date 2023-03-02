@@ -1,5 +1,6 @@
 package TradUML;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -14,7 +15,7 @@ public class Infos {
     /**
      * date de lecture du message par l'employe il est null par defaut
      */
-    private Date dateLecture = null;
+    private LocalDate dateLecture = null;
     /**
      * employe recepteur qui recois le message
      */
@@ -34,7 +35,7 @@ public class Infos {
      *
      * @return la date de lecture de l'employe si elle est nulle alors l'employe n'a pas encore lu le message
      */
-    public Date getDateLecture() {
+    public LocalDate getDateLecture() {
         return dateLecture;
     }
 
@@ -43,7 +44,7 @@ public class Infos {
      *
      * @param dateLecture qui sera attribuee automatiquement quand l'employe aura lu le message
      */
-    public void setDateLecture(Date dateLecture) {
+    public void setDateLecture(LocalDate dateLecture) {
         this.dateLecture = dateLecture;
     }
 
