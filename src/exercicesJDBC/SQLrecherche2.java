@@ -33,7 +33,7 @@ public class SQLrecherche2 {
                 String mail = rs.getString("MAIL_EMP");
 
                 int n_bur = rs.getInt("ID_BUREAU");
-                System.out.println( n_emp + " :" +nom + " " + prenom + " "+ mail + " : " + n_bur);
+                System.out.println( n_emp + ") " +nom + " " + prenom + " "+ mail + " id du bureau : " + n_bur);
             }
             if (!trouve) {
                 System.out.println("id de l'employé inconnu");
