@@ -1,11 +1,10 @@
-package exercicesJDBC;
+package GestionJBDC;
 
 import TradUML.Employe;
 import TradUML.Infos;
 import TradUML.Message;
 import myconnections.DBConnection;
 
-import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
