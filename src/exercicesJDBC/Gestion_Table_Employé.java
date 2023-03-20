@@ -28,16 +28,21 @@ public class Gestion_Table_Employé {
 
         System.out.println("Entrez l'id du bureau' : ");
         int idBur = sc.nextInt();
-
-
-        PreparedStatement pstmt = dbConnect.prepareStatement("insert into apiemploye (id_employe,mail_emp,nom,prenom,id_bureau) VALUES (APIEMPLOYE_SEQ.nextval,?, ?, ?, ?)");
-        pstmt.setString(1, mailEmp);
-        pstmt.setString(2, nomEmp);
-        pstmt.setString(3, prenomEmp);
-        pstmt.setInt(4, idBur);
-        pstmt.executeUpdate();
-
-        System.out.println("Employé ajouté avec succés ! ");
+        boolean ok = true;
+        try {
+            PreparedStatement pstmt = dbConnect.prepareStatement("insert into apiemploye (id_employe,mail_emp,nom,prenom,id_bureau) VALUES (APIEMPLOYE_SEQ.nextval,?, ?, ?, ?)");
+            pstmt.setString(1, mailEmp);
+            pstmt.setString(2, nomEmp);
+            pstmt.setString(3, prenomEmp);
+            pstmt.setInt(4, idBur);
+            pstmt.executeUpdate();
+        }catch (Exception e){
+            System.out.println(e);
+            ok = false;
+        }
+        if(ok){
+            System.out.println("Employé ajouté avec succés ! ");
+        }
 
         DBConnection.closeConnection();
     }
@@ -119,7 +124,7 @@ public class Gestion_Table_Employé {
         }
         System.out.println("connexion établie");
         System.out.println("Id de l'employé recherche : ");
-        String n_emp = sc.nextLine();
+        int n_emp = sc.nextInt();
 
         try (Statement stmt = dbConnect.createStatement();
              ResultSet rs = stmt.executeQuery(
@@ -183,9 +188,31 @@ public class Gestion_Table_Employé {
     }
 
     private void update() {
+        //todo update query
     }
 
     private void delete() {
+        Scanner sc = new Scanner(System.in);
+        Connection dbConnect = DBConnection.getConnection();
+        if (dbConnect == null) {
+            System.exit(1);
+        }
+        System.out.println("connexion établie");
+        System.out.println("Id de l'employé à supprimer : ");
+        int idEmp = sc.nextInt();
+        boolean ok = true;
+        try {
+
+            PreparedStatement pstmt = dbConnect.prepareStatement("DELETE FROM APIEMPLOYE WHERE id_employe = ?");
+            pstmt.setInt(1,idEmp);
+            pstmt.executeUpdate();
+        } catch(Exception e) {
+            System.out.println(e);
+            ok = false;
+        }
+        if(ok){
+            System.out.println("Employé supprimé avec succés");
+        }
     }
 
     public static void main(String[] args) throws SQLException {
