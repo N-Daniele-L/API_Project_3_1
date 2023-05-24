@@ -34,6 +34,7 @@ public class Message {
      */
 
     private Employe emetteur;
+    private int id_emp;
     /**
      * liste des infos du message
      * infos contient l'employe qui recois le message et la date de lecture du message
@@ -56,6 +57,14 @@ public class Message {
         this.contenu = contenu;
         this.dateEnvoi = dateEnvoi;
         this.emetteur = emetteur;
+    }
+
+    public Message(int id_mess, String objet, String contenu, LocalDate date, int id_emp) {
+        this.id_mess = id_mess;
+        this.objet = objet;
+        this.contenu = contenu;
+        this.dateEnvoi = date;
+        this.id_emp = id_emp;
     }
 
     /**

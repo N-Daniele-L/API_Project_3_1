@@ -147,7 +147,7 @@ public class Gestion_Table_Employé {
                 String mail = rs.getString("MAIL_EMP");
                 int n_bur = rs.getInt("ID_BUREAU");
                 System.out.println(n_emp + ") " + nom + " " + prenom + " " + mail + " id du bureau : " + n_bur);
-                Employe em = new Employe(n_emp,mail,nom,prenom);
+                Employe em = new Employe(n_emp,mail,nom,prenom,n_bur);
                 System.out.println(em);
                 infoSuppl(em);
             }
@@ -186,7 +186,7 @@ public class Gestion_Table_Employé {
                 String mail = rs.getString("MAIL_EMP");
                 int n_emp = rs.getInt("ID_EMPLOYE");
                 System.out.println(n_emp + " :" + nom + " " + prenom + " " + mail + " : " + idBur);
-                Employe em = new Employe(n_emp,mail,nom,prenom);
+                Employe em = new Employe(n_emp,mail,nom,prenom,idBur);
                 System.out.println(em);
                 infoSuppl(em);
             }

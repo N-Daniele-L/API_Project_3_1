@@ -33,6 +33,16 @@ public class Employe {
      * bureau ou l'employe travaille
      */
     private Bureau bureau;
+    private int id_bur;
+
+    public int getId_emp() {
+        return id_emp;
+    }
+
+    public int getId_bur() {
+        return id_bur;
+    }
+
     /**
      * message que l'employe a ecrit
      */
@@ -47,11 +57,13 @@ public class Employe {
      * @param prenom prenom de l'employe
 
      */
-    public Employe(int id_emp, String mail, String nom, String prenom) {
+
+    public Employe(int id_emp, String mail, String nom, String prenom, int id_bur) {
         this.id_emp = id_emp;
         this.mail = mail;
         this.nom = nom;
         this.prenom = prenom;
+        this.id_bur = id_bur;
     }
 
     /**
@@ -99,6 +111,9 @@ public class Employe {
         return nom;
     }
 
+    public int getIdBur(){
+        return id_bur;
+    }
     /**
      * setter setnom
      *
