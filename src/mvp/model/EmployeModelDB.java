@@ -80,12 +80,14 @@ public class EmployeModelDB implements DAOEmploye, EmployeSpecial{
     }
     @Override
     public Employe updateEmploye(Employe employe) {
-        String query = "update apiemploye set mail_emp = ?, nom = ?, prenom = ? WHERE id_employe = ?";
+        Bureau bureau = employe.getBureau();
+        String query = "update apiemploye set mail_emp = ?, nom = ?, prenom = ?, id_bureau = ? WHERE id_employe = ?";
         try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setString(1,employe.getMail());
             pstm.setString(2,employe.getNom());
             pstm.setString(3,employe.getPrenom());
-            pstm.setInt(4,employe.getId());
+            pstm.setInt(4, bureau.getId());
+            pstm.setInt(5,employe.getId());
             int n = pstm.executeUpdate();
             if(n!=0) return readEmploye(employe.getId());
             else return null;

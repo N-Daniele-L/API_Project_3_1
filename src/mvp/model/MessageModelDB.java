@@ -63,7 +63,7 @@ public class MessageModelDB implements DAOMessage{
 
     @Override
     public boolean removeMessage(Message mes) {
-        String query = "DELETE FROM APIMESSAGE WHERE id_message = ?";
+        String query = "DELETE FROM APIMESSAGE WHERE id_mess = ?";
         try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setInt(1,mes.getId());
             int n = pstm.executeUpdate();
@@ -79,12 +79,44 @@ public class MessageModelDB implements DAOMessage{
 
     @Override
     public Message updateMessage(Message mes) {
-        return null;
+        String query = "update APIMESSAGE set objet = ?, contenu = ?, dateenvoi = CURRENT_DATE WHERE id_mess = ?";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setString(1,mes.getObjet());
+            pstm.setString(2,mes.getContenu());
+            pstm.setInt(3,mes.getId());
+            int n = pstm.executeUpdate();
+            if(n!=0) return readMessage(mes.getId());
+            else return null;
+
+        } catch (SQLException e) {
+            // System.err.println("erreur sql :" + e);
+            logger.error("erreur d'update : "+e);
+            return null;
+        }
     }
 
     @Override
-    public Message readMessage(int idMess) {
-        return null;
+    public Message readMessage(int id_mess) {
+        String query = "select * from APIMESSAGE where id_mess = ?";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1,id_mess);
+            ResultSet rs = pstm.executeQuery();
+            if(rs.next()){
+                String objet = rs.getString(2);
+                String cont = rs.getString(3);
+                LocalDate date = rs.getDate(4).toLocalDate();
+                int id_emp = rs.getInt(5);
+                return new Message(id_mess,objet,cont,date,id_emp);
+
+            }
+            else {
+                return null;
+            }
+        } catch (SQLException e) {
+            // System.err.println("erreur sql :"+e);
+            logger.error("erreur SQL : "+e);
+            return null;
+        }
     }
 
     @Override

@@ -115,8 +115,7 @@ public class EmployeViewConsole implements EmployeViewInterface{
         String mailEmp = modifyIfNotBlank("mail" , employe.getMail());
         String nomEmp = modifyIfNotBlank("nom", employe.getNom());
         String prenomEmp = modifyIfNotBlank("prénom", employe.getPrenom());
-        int idBur = Integer.parseInt(modifyIfNotBlank("id_bureau", String.valueOf(employe.getId_bur())));
-        presenter.update(new Employe(employe.getId(),mailEmp,nomEmp,prenomEmp,idBur));
+        presenter.update(new Employe(employe.getId(),mailEmp,nomEmp,prenomEmp,0));
         lem = presenter.getAll();//rafraichissement
         affListe(lem);
     }

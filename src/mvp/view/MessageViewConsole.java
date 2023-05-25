@@ -12,8 +12,7 @@ import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 
-import static utilitaires.Utilitaire.affListe;
-import static utilitaires.Utilitaire.choixListe;
+import static utilitaires.Utilitaire.*;
 
 public class MessageViewConsole implements MessageViewInterface{
     private MessagePresenter presenter;
@@ -89,12 +88,29 @@ public class MessageViewConsole implements MessageViewInterface{
     }
 
     private void retirer() {
+        int nl = choixElt(lm)-1;
+        Message message = lm.get(nl);
+        presenter.removeMessage(message);
+        lm = presenter.getAll();//rafraichissement
+        affListe(lm);
     }
 
     private void rechercher() {
+        System.out.println("id du message: ");
+        int id_mess = sc.nextInt();
+        presenter.search(id_mess);
     }
 
     private void modifier() {
+        int nl = choixElt(lm) - 1;
+
+        Message message= lm.get(nl);
+        LocalDate now = LocalDate.now();
+        String objet = modifyIfNotBlank("mail" , message.getObjet());
+        String contenu = modifyIfNotBlank("nom", message.getContenu());
+        presenter.update(new Message(message.getId(),objet,contenu,now,0));
+        lm = presenter.getAll();//rafraichissement
+        affListe(lm);
     }
 
     private void special() {

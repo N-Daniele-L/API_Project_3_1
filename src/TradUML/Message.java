@@ -187,8 +187,7 @@ public class Message {
                 ", objet='" + objet + '\'' +
                 ", contenu='" + contenu + '\'' +
                 ", dateEnvoi=" + dateEnvoi +
-                ", emetteur=" + emetteur +
-                ", l_infos=" + l_infos +
+                ", id emetteur=" + id_mess +
                 '}';
     }
 }

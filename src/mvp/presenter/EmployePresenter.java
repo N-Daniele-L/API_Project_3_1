@@ -64,6 +64,7 @@ public class EmployePresenter {
     }
 
     public void update(Employe employe) {
+
         Employe em =model.updateEmploye(employe);
         if(em==null) view.affMsg("mise à jour infrucueuse");
         else view.affMsg("mise à jour effectuée : "+em);

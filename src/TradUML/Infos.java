@@ -20,6 +20,7 @@ public class Infos {
      * employe recepteur qui recois le message
      */
     private Employe recepteur;
+    private int id_emp;
 
     /**
      * constructeur parametre
@@ -56,6 +57,9 @@ public class Infos {
     public Employe getRecepteur() {
         return recepteur;
     }
+    public int getId() {
+        return id_emp;
+    }
 
     /**
      * setter setrecepteur
@@ -75,7 +79,7 @@ public class Infos {
     public String toString() {
         return "Infos{" +
                 "dateLecture=" + dateLecture +
-                ", recepteur=" + recepteur +
+                ",Id recepteur=" + id_emp +
                 '}';
     }
 }
