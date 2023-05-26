@@ -22,13 +22,23 @@ public class Infos {
     private Employe recepteur;
     private int id_emp;
 
+    private Message mess;
+    private int id_mess;
+
     /**
      * constructeur parametre
      *
      * @param recepteur employe qui recois le message
      */
-    public Infos(Employe recepteur) {
+    public Infos(Employe recepteur, Message mess) {
         this.recepteur = recepteur;
+        this.mess = mess;
+    }
+
+    public Infos(int recepteur, int mess,LocalDate date) {
+        this.id_emp = recepteur;
+        this.id_mess = mess;
+        this.dateLecture = date;
     }
 
     /**
@@ -57,8 +67,28 @@ public class Infos {
     public Employe getRecepteur() {
         return recepteur;
     }
-    public int getId() {
+    public int getId_emp() {
         return id_emp;
+    }
+
+    public void setId_emp(int id_emp) {
+        this.id_emp = id_emp;
+    }
+
+    public Message getMess() {
+        return mess;
+    }
+
+    public void setMess(Message mess) {
+        this.mess = mess;
+    }
+
+    public int getId_mess() {
+        return id_mess;
+    }
+
+    public void setId_mess(int id_mess) {
+        this.id_mess = id_mess;
     }
 
     /**
@@ -78,8 +108,10 @@ public class Infos {
     @Override
     public String toString() {
         return "Infos{" +
-                "dateLecture=" + dateLecture +
-                ",Id recepteur=" + id_emp +
+
+                "Id du recepteur=" + id_emp +
+                ", Id du message=" + id_mess +
+                ", Date de lecture=" + dateLecture +
                 '}';
     }
 }

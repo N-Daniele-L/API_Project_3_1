@@ -2,6 +2,7 @@ package mvp.model;
 
 import TradUML.Bureau;
 import TradUML.Employe;
+import TradUML.Infos;
 import TradUML.Message;
 import myconnections.DBConnection;
 import org.apache.logging.log4j.LogManager;
@@ -29,7 +30,6 @@ public class MessageModelDB implements DAOMessage{
 
     @Override
     public Message addMessage(Message mes) {
-        Employe employe = mes.getEmetteur();
         String query1 = "insert into APIMESSAGE (objet,contenu,id_employe,dateenvoi) VALUES (?, ?,?, CURRENT_DATE)";
         String query2 = "select id_message from APIMESSAGE where objet= ? and contenu = ? and date_envoi = CURRENT_DATE";
         try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
@@ -37,7 +37,7 @@ public class MessageModelDB implements DAOMessage{
         ) {
             pstm1.setString(1, mes.getObjet());
             pstm1.setString(2, mes.getContenu());
-            pstm1.setInt(3, employe.getId());
+            pstm1.setInt(3, mes.getEmetteur().getId());
             int n = pstm1.executeUpdate();
             if (n == 1) {
                 pstm2.setString(1, mes.getObjet());
@@ -121,7 +121,6 @@ public class MessageModelDB implements DAOMessage{
 
     @Override
     public List<Message> getMessage() {
-
         List<Message> lm = new ArrayList<>();
         String query="select * from APIMESSAGE ORDER BY id_mess";
         try(Statement stm = dbConnect.createStatement()) {

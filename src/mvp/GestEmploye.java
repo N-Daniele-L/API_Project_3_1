@@ -19,6 +19,9 @@ public class GestEmploye {
     private DAOMessage mm;
     private MessagePresenter mp;
     private MessageViewInterface mv;
+    private DAOInfos im;
+    private InfosPresenter ip;
+    private InfosViewInterface iv;
 
 
 
@@ -37,10 +40,16 @@ public class GestEmploye {
         mp = new MessagePresenter(mm,mv);
         mp.setEmployepresenter(cp);
 
+        im = new InfosModelDB();
+        iv = new InfosViewConsole();
+        ip = new InfosPresenter(im,iv);
+        ip.setEmployepresenter(cp);
+        ip.setMessagePresenter(mp);
 
 
 
-        List<String> loptions = Arrays.asList("Employe","Bureau","Messages","fin");
+
+        List<String> loptions = Arrays.asList("Employe","Bureau","Messages","Infos","Fin");
         do {
             int ch = Utilitaire.choixListe(loptions);
             switch (ch){
@@ -50,7 +59,9 @@ public class GestEmploye {
                     break;
                 case 3: mp.start();
                     break;
-                case 4: System.exit(0);
+                case 4: ip.start();
+                    break;
+                case 5: System.exit(0);
             }
         }while(true);
     }

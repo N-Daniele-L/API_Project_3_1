@@ -4,6 +4,7 @@ package mvp.view;
 import TradUML.Employe;
 import TradUML.Message;
 import mvp.presenter.MessagePresenter;
+import utilitaires.Utilitaire;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,8 +47,9 @@ public class MessageViewConsole implements MessageViewInterface{
     }
 
     @Override
-    public Message selectionner(List<Message> lem) {
-        return null;
+    public Message selectionner(List<Message> lm) {
+        int choix = Utilitaire.choixListe(lm);
+        return lm.get(choix - 1);
     }
     private void menu() {
         do {

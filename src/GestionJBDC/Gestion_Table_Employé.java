@@ -372,8 +372,8 @@ public class Gestion_Table_Employé {
                 if (date != null) {
                     formattedDate = date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG));
                 }
-                Infos i = new Infos(employe);
-                System.out.println(i + " "+ id_mess +" " + formattedDate);
+                //Infos i = new Infos(employe);
+                //System.out.println(i + " "+ id_mess +" " + formattedDate);
             }
             if(!trouve) System.out.println("aucun message trouvé");
         } catch (SQLException e) {
@@ -393,8 +393,8 @@ public class Gestion_Table_Employé {
                 trouve = true;
                 int id_employe = rs.getInt(1);
                 String id_mess = rs.getString(2);
-                Infos i = new Infos(employe);
-                System.out.println(i + " "+ id_mess);
+                //Infos i = new Infos(employe);
+                //System.out.println(i + " "+ id_mess);
             }
             if(!trouve) System.out.println("aucun message non lu");
         } catch (SQLException e) {

@@ -10,7 +10,7 @@ public class Utilitaire {
     private static Scanner sc = new Scanner(System.in);
     public static int choixListe(List l){
        affListe(l);
-       return choixElt(l);
+       return choixOption(l);
     }
 
     public static void affListe(List l){
@@ -24,6 +24,15 @@ public class Utilitaire {
         int choix;
         do {
             System.out.println("choix du numéro de la liste :");
+            choix = sc.nextInt();
+            sc.skip("\n");
+        } while(choix <1 || choix > l.size());
+        return choix;
+    }
+    public static int choixOption(List l){
+        int choix;
+        do {
+            System.out.println("choix du numéro de l'option :");
             choix = sc.nextInt();
             sc.skip("\n");
         } while(choix <1 || choix > l.size());

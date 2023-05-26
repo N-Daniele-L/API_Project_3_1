@@ -12,9 +12,9 @@ import java.util.List;
 
 public class MessagePresenter {
     private DAOMessage model;
-    private DAOEmploye employemodel;
     private MessageViewInterface view;
     private EmployePresenter employePresenter;
+
 
     private static final Logger logger = LogManager.getLogger(MessagePresenter.class);
 

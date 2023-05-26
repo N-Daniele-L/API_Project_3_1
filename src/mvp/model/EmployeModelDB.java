@@ -29,7 +29,6 @@ public class EmployeModelDB implements DAOEmploye, EmployeSpecial{
 
     @Override
     public Employe addEmploye(Employe employe) {
-        Bureau bureau = employe.getBureau();
         String query1 = "insert into APIEMPLOYE (mail_emp,nom,prenom,id_bureau) VALUES (?, ?, ?, ?)";
         String query2 = "select id_employe from APIEMPLOYE where nom= ? and prenom =? and mail_emp =?";
         try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
@@ -38,7 +37,7 @@ public class EmployeModelDB implements DAOEmploye, EmployeSpecial{
             pstm1.setString(1, employe.getMail());
             pstm1.setString(2, employe.getNom());
             pstm1.setString(3, employe.getPrenom());
-            pstm1.setInt(4, bureau.getId());
+            pstm1.setInt(4, employe.getBureau().getId());
             int n = pstm1.executeUpdate();
             if (n == 1) {
                 pstm2.setString(1, employe.getNom());
@@ -80,13 +79,12 @@ public class EmployeModelDB implements DAOEmploye, EmployeSpecial{
     }
     @Override
     public Employe updateEmploye(Employe employe) {
-        Bureau bureau = employe.getBureau();
         String query = "update apiemploye set mail_emp = ?, nom = ?, prenom = ?, id_bureau = ? WHERE id_employe = ?";
         try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setString(1,employe.getMail());
             pstm.setString(2,employe.getNom());
             pstm.setString(3,employe.getPrenom());
-            pstm.setInt(4, bureau.getId());
+            pstm.setInt(4, employe.getBureau().getId());
             pstm.setInt(5,employe.getId());
             int n = pstm.executeUpdate();
             if(n!=0) return readEmploye(employe.getId());
