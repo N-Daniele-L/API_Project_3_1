@@ -109,9 +109,7 @@ public class EmployeViewConsole implements EmployeViewInterface{
 
     private void modifier() {
         int nl = choixElt(lem) - 1;
-
         Employe employe = lem.get(nl);
-
         String mailEmp = modifyIfNotBlank("mail" , employe.getMail());
         String nomEmp = modifyIfNotBlank("nom", employe.getNom());
         String prenomEmp = modifyIfNotBlank("prénom", employe.getPrenom());

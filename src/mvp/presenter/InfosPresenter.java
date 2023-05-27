@@ -53,9 +53,17 @@ public class InfosPresenter {
     }
 
     public void removeInfos(Infos infos) {
+        Employe employe = employePresenter.search(infos.getId_emp());
+        Message message= messagePresenter.search(infos.getId_mess());
+        if(employe == null || message == null){
+            view.affMsg("Erreur employe ou message null");
+            return;
+        }
+        infos.setRecepteur(employe);
+        infos.setMess(message);
         boolean ok = model.removeInfos(infos);
-        if(ok) view.affMsg("message effacé");
-        else view.affMsg("message non effacé");
+        if(ok) view.affMsg("infos effacé");
+        else view.affMsg("infos non effacé");
     }
 
     public Infos selectionner() {
@@ -65,6 +73,14 @@ public class InfosPresenter {
     }
 
     public void update(Infos infos) {
+        Employe employe = employePresenter.search(infos.getId_emp());
+        Message message= messagePresenter.search(infos.getId_mess());
+        if(employe == null || message == null){
+            view.affMsg("Erreur employe ou message null");
+            return;
+        }
+        infos.setRecepteur(employe);
+        infos.setMess(message);
         Infos i =model.updateInfos(infos);
         if(i==null) view.affMsg("mise à jour infrucueuse");
         else view.affMsg("mise à jour effectuée : "+ i);

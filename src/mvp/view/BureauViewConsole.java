@@ -99,9 +99,7 @@ public class BureauViewConsole implements BureauViewInterface{
     }
     private void modifier() {
         int nl = choixElt(lb) - 1;
-
         Bureau bureau = lb.get(nl);
-
         String sigle = modifyIfNotBlank("mail" , bureau.getSigle());
         String tel = modifyIfNotBlank("nom", bureau.getTel());
         presenter.update(new Bureau(bureau.getId(),sigle,tel));

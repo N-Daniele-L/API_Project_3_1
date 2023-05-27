@@ -45,17 +45,63 @@ public class InfosModelDB implements DAOInfos {
 
     @Override
     public boolean removeInfos(Infos inf) {
-        return false;
+        String query = "DELETE FROM APIINFOS WHERE id_employe = ? and id_mess = ?";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1,inf.getRecepteur().getId());
+            pstm.setInt(2, inf.getMess().getId());
+            int n = pstm.executeUpdate();
+            if(n!=0) return true;
+            else return false;
+
+        } catch (SQLException e) {
+            //  System.err.println("erreur sql :"+e);
+            logger.error("erreur d'effacement : "+e);
+            return false;
+        }
     }
 
     @Override
     public Infos updateInfos(Infos inf) {
-        return null;
+        String query = "update APIINFOS set datelecture = ? WHERE id_employe = ? and id_mess = ?";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setDate(1,inf.getDateLecture()!=null?Date.valueOf(inf.getDateLecture()):null);
+            pstm.setInt(2,inf.getRecepteur().getId());
+            pstm.setInt(3,inf.getMess().getId());
+            int n = pstm.executeUpdate();
+            if(n!=0) return readInfos(inf.getRecepteur().getId(),inf.getMess().getId());
+            else return null;
+
+        } catch (SQLException e) {
+            // System.err.println("erreur sql :" + e);
+            logger.error("erreur d'update : "+e);
+            return null;
+        }
     }
 
     @Override
     public Infos readInfos(int id_emp, int id_mess) {
-        return null;
+        String query = "select * from APIINFOS where id_employe = ? and id_mess = ?";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1,id_emp);
+            pstm.setInt(2,id_mess);
+            ResultSet rs = pstm.executeQuery();
+            if(rs.next()){
+                Date date = rs.getDate(3);
+                if(date != null) {
+                    LocalDate localdate = date.toLocalDate();
+                    return new Infos(id_emp, id_mess, localdate);
+                }else {
+                    return new Infos(id_emp, id_mess, null);
+                }
+            }
+            else {
+                return null;
+            }
+        } catch (SQLException e) {
+            // System.err.println("erreur sql :"+e);
+            logger.error("erreur SQL : "+e);
+            return null;
+        }
     }
 
     @Override

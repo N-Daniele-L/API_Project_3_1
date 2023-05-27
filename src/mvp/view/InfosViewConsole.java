@@ -88,11 +88,21 @@ public class InfosViewConsole implements InfosViewInterface{
     }
 
     private void rechercher() {
-
+        System.out.println("id de l'employé: ");
+        int id_emp = sc.nextInt();
+        System.out.println("id du message: ");
+        int id_mess = sc.nextInt();
+        presenter.search(id_emp,id_mess);
     }
 
     private void modifier() {
-
+        int nl = choixElt(linfos) - 1;
+        Infos inf= linfos.get(nl);
+        String date = modifyIfNotBlank("date de facturation ",inf.getDateLecture()+"");
+        LocalDate datelect = !date.equals("null")?LocalDate.parse(date):null;
+        presenter.update(new Infos(inf.getId_emp(), inf.getId_mess(),datelect));
+        linfos = presenter.getAll();//rafraichissement
+        affListe(linfos);
     }
 
     private void special() {

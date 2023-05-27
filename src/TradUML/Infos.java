@@ -1,7 +1,6 @@
 package TradUML;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 /**
  * classe metier des informations des messages que les employes recoivent

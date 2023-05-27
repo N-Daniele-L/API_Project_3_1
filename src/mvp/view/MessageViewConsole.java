@@ -105,7 +105,6 @@ public class MessageViewConsole implements MessageViewInterface{
 
     private void modifier() {
         int nl = choixElt(lm) - 1;
-
         Message message= lm.get(nl);
         LocalDate now = LocalDate.now();
         String objet = modifyIfNotBlank("mail" , message.getObjet());
