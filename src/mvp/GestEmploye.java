@@ -25,7 +25,7 @@ public class GestEmploye {
 
 
 
-    public void gestion(){
+    public void gestion() throws Exception {
         bm = new BureauModelDB();
         bv = new BureauViewConsole();
         bp = new BureauPresenter(bm,bv);
@@ -65,7 +65,7 @@ public class GestEmploye {
             }
         }while(true);
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         GestEmploye ge = new GestEmploye();
         ge.gestion();
     }

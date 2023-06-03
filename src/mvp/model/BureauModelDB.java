@@ -25,6 +25,7 @@ public class BureauModelDB implements DAOBureau{
     }
     @Override
     public Bureau addBureau(Bureau bureau) {
+        Bureau buro;
         String query1 = "insert into APIBUREAU (sigle,tel) VALUES (?, ?)";
         String query2 = "select id_bureau from APIBUREAU where sigle= ? and tel =?  ";
         try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
@@ -40,8 +41,12 @@ public class BureauModelDB implements DAOBureau{
 
                 if (rs.next()) {
                     int id_bur = rs.getInt(1);
-                    bureau.setId(id_bur);
-                    return bureau;
+                    buro = new Bureau.BureauBuilder()
+                            .setId(id_bur)
+                            .setSigle(bureau.getSigle())
+                            .setTel(bureau.getTel())
+                            .build();
+                    return buro;
                 } else {
                     logger.error("record introuvable");
                     //  System.err.println("record introuvable");
@@ -53,6 +58,8 @@ public class BureauModelDB implements DAOBureau{
             //System.err.println("erreur sql :"+e);
             logger.error("erreur sql :" + e);
             return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -99,7 +106,11 @@ public class BureauModelDB implements DAOBureau{
             if(rs.next()){
                 String sigle = rs.getString(2);
                 String tel = rs.getString(3);
-                return new Bureau(idBur,sigle,tel);
+                return new Bureau.BureauBuilder()
+                        .setId(idBur)
+                        .setSigle(sigle)
+                        .setTel(tel)
+                        .build();
             }
             else {
                 return null;
@@ -108,6 +119,8 @@ public class BureauModelDB implements DAOBureau{
             // System.err.println("erreur sql :"+e);
             logger.error("erreur SQL : "+e);
             return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -121,7 +134,11 @@ public class BureauModelDB implements DAOBureau{
                 int id_bur = rs.getInt(1);
                 String sigle = rs.getString(2);
                 String tel = rs.getString(3);
-                Bureau bur = new Bureau(id_bur,sigle,tel);
+                Bureau bur = new Bureau.BureauBuilder()
+                        .setId(id_bur)
+                        .setSigle(sigle)
+                        .setTel(tel)
+                        .build();
                 lb.add(bur);
             }
             return lb;
@@ -129,6 +146,8 @@ public class BureauModelDB implements DAOBureau{
             //System.err.println("erreur sql :"+e);
             logger.error("erreur SQL : "+e);
             return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -27,7 +27,7 @@ public class BureauViewConsole implements BureauViewInterface{
     }
 
     @Override
-    public void setListDatas(List<Bureau> bur) {
+    public void setListDatas(List<Bureau> bur) throws Exception {
         this.lb = bur;
         affListe(bur);
         menu();
@@ -49,7 +49,7 @@ public class BureauViewConsole implements BureauViewInterface{
         return lb.get(choix - 1);
     }
 
-    private void menu() {
+    private void menu() throws Exception {
         do {
 
             int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier", "special", "fin"));
@@ -75,12 +75,16 @@ public class BureauViewConsole implements BureauViewInterface{
         } while (true);
     }
 
-    private void ajouter() {
+    private void ajouter() throws Exception {
         System.out.println("Entrez le sigle du bureau : ");
         String sigle = sc.nextLine();
         System.out.println("Entrez le numéro de téléphone du bureau");
         String tel = sc.nextLine();
-        presenter.addBureau(new Bureau(0,sigle,tel));
+        presenter.addBureau(new Bureau.BureauBuilder()
+                .setId(0)
+                .setSigle(sigle)
+                .setTel(tel)
+                .build());
         lb = presenter.getAll();
         affListe(lb);
     }
@@ -97,12 +101,16 @@ public class BureauViewConsole implements BureauViewInterface{
         int idBur = sc.nextInt();
         presenter.search(idBur);
     }
-    private void modifier() {
+    private void modifier() throws Exception {
         int nl = choixElt(lb) - 1;
         Bureau bureau = lb.get(nl);
         String sigle = modifyIfNotBlank("mail" , bureau.getSigle());
         String tel = modifyIfNotBlank("nom", bureau.getTel());
-        presenter.update(new Bureau(bureau.getId(),sigle,tel));
+        presenter.update((new Bureau.BureauBuilder()
+                .setId(bureau.getId()))
+                .setSigle(sigle)
+                .setTel(tel)
+                .build());
         lb = presenter.getAll();//rafraichissement
         affListe(lb);
     }

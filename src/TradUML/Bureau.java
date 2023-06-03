@@ -16,32 +16,30 @@ public class Bureau {
     /**
      * id unique du bureau
      */
-    private int id_bur;
+    protected int id_bur;
     /**
      * sigle unique du bureau
      */
-    private String sigle;
+    protected String sigle;
     /**
      * numero de telephone du bureau
      */
-    private String tel;
+    protected String tel;
     /**
      * liste des employes qui travaillent dans un bureau
      */
-    private List<Employe> employe = new ArrayList<>();
+    protected List<Employe> employe = new ArrayList<>();
 
     /**
      * constructeur parametre
      *
-     * @param id_bur id numerique unique du bureau
-     * @param sigle  acronyme unique du bureau
-     * @param tel    numero de telephone du bureau
+     * @param bb objet de la classe BureauBuilder
 
      */
-    public Bureau(int id_bur, String sigle, String tel) {
-        this.id_bur = id_bur;
-        this.sigle = sigle;
-        this.tel = tel;
+    private Bureau(BureauBuilder bb) {
+        this.id_bur = bb.id_bur;
+        this.sigle = bb.sigle;
+        this.tel = bb.tel;
     }
 
     /**
@@ -53,14 +51,7 @@ public class Bureau {
         return id_bur;
     }
 
-    /**
-     * setter setid
-     *
-     * @param id_bur changement de l'id unique du bureau
-     */
-    public void setId(int id_bur) {
-        this.id_bur = id_bur;
-    }
+
 
     /**
      * getter getsigle
@@ -71,14 +62,7 @@ public class Bureau {
         return sigle;
     }
 
-    /**
-     * setter setsigle
-     *
-     * @param sigle changement du sigle unique du bureau
-     */
-    public void setSigle(String sigle) {
-        this.sigle = sigle;
-    }
+
 
     /**
      * getter gettel
@@ -89,14 +73,7 @@ public class Bureau {
         return tel;
     }
 
-    /**
-     * setter settel
-     *
-     * @param tel changement du numero de telephone du bureau
-     */
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
+
 
     /**
      * getter getemploye
@@ -107,14 +84,7 @@ public class Bureau {
         return employe;
     }
 
-    /**
-     * setter setemploye
-     *
-     * @param employe modifie la liste de tout les employes
-     */
-    public void setEmploye(List<Employe> employe) {
-        this.employe = employe;
-    }
+
 
     /**
      * egalite de deux bureaux basee sur le sigle du bureau
@@ -152,5 +122,72 @@ public class Bureau {
                 ", sigle='" + sigle + '\'' +
                 ", tel='" + tel + '\'' +
                 '}';
+    }
+
+    public static class BureauBuilder{
+        /**
+         * id unique du bureau
+         */
+        protected int id_bur;
+        /**
+         * sigle unique du bureau
+         */
+        protected String sigle;
+        /**
+         * numero de telephone du bureau
+         */
+        protected String tel;
+
+        /**
+         * setter setid
+         *
+         * @param id_bur changement de l'id unique du bureau
+         */
+
+        /**
+         * liste des employes qui travaillent dans un bureau
+         */
+        protected List<Employe> employe = new ArrayList<>();
+
+        public BureauBuilder setId(int id_bur) {
+            this.id_bur = id_bur;
+            return this;
+        }
+
+        /**
+         * setter setsigle
+         *
+         * @param sigle changement du sigle unique du bureau
+         */
+        public BureauBuilder setSigle(String sigle) {
+            this.sigle = sigle;
+            return this;
+        }
+
+        /**
+         * setter settel
+         *
+         * @param tel changement du numero de telephone du bureau
+         */
+        public BureauBuilder setTel(String tel) {
+            this.tel = tel;
+            return this;
+        }
+
+        /**
+         * setter setemploye
+         *
+         * @param employe modifie la liste de tout les employes
+         */
+        public BureauBuilder setEmploye(List<Employe> employe) {
+            this.employe = employe;
+            return this;
+        }
+        public Bureau build() throws Exception{
+            /*if(sigle==null || tel==null) throw new
+                    Exception("informations de construction incomplètes");*/
+            return new Bureau(this);
+        }
+
     }
 }

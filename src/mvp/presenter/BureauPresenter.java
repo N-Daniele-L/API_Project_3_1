@@ -21,7 +21,7 @@ public class BureauPresenter {
         this.view.setPresenter(this);
     }
 
-    public void start() {
+    public void start() throws Exception {
         view.setListDatas(getAll());
     }
 
