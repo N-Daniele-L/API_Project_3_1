@@ -16,55 +16,43 @@ public class Message {
     /**
      * id unique du message
      */
-    private int id_mess;
+    protected int id_mess;
     /**
      * objet du message
      */
-    private String objet;
+    protected String objet;
     /**
      * contenu du message
      */
-    private String contenu;
+    protected String contenu;
     /**
      * date d'envoi du message
      */
-    private LocalDate dateEnvoi;
+    protected LocalDate dateEnvoi;
     /**
      * employe qui a envoyer le message
      */
 
-    private Employe emetteur;
-    private int id_emp;
+    protected Employe emetteur;
+    protected int id_emp;
     /**
      * liste des infos du message
      * infos contient l'employe qui recois le message et la date de lecture du message
      * si la date de lecture est nulle alors le message n'a pas encore ete lu
      */
-    private List<Infos> l_infos = new ArrayList<>();
+    protected List<Infos> l_infos = new ArrayList<>();
 
     /**
      * constructeur parametre
      *
-     * @param id_mess   identifiant numerique du message
-     * @param objet     intitule du message
-     * @param contenu   contenu du message
-     * @param dateEnvoi date d'envoi du message
-     * @param emetteur  employe qui envoie le message
+     * @param bm objet de la classe BuilderMessage
      */
-    public Message(int id_mess, String objet, String contenu, LocalDate dateEnvoi, Employe emetteur) {
-        this.id_mess = id_mess;
-        this.objet = objet;
-        this.contenu = contenu;
-        this.dateEnvoi = dateEnvoi;
-        this.emetteur = emetteur;
-    }
-
-    public Message(int id_mess, String objet, String contenu, LocalDate date, int id_emp) {
-        this.id_mess = id_mess;
-        this.objet = objet;
-        this.contenu = contenu;
-        this.dateEnvoi = date;
-        this.id_emp = id_emp;
+    public Message(MessageBuilder bm) {
+        this.id_mess = bm.id_mess;
+        this.objet = bm.objet;
+        this.contenu = bm.contenu;
+        this.dateEnvoi = bm.dateEnvoi;
+        this.id_emp = bm.id_emp;
     }
 
     /**
@@ -77,30 +65,12 @@ public class Message {
     }
 
     /**
-     * setter setid
-     *
-     * @param id_mess change l'id unique du message
-     */
-    public void setId(int id_mess) {
-        this.id_mess = id_mess;
-    }
-
-    /**
      * getter getobjet
      *
      * @return l'objet, l'intitule du message
      */
     public String getObjet() {
         return objet;
-    }
-
-    /**
-     * setter setobjet
-     *
-     * @param objet modifie l'objet, l'intitule du message
-     */
-    public void setObjet(String objet) {
-        this.objet = objet;
     }
 
     /**
@@ -113,30 +83,12 @@ public class Message {
     }
 
     /**
-     * setter setcontenu
-     *
-     * @param contenu modifie le contenu du message
-     */
-    public void setContenu(String contenu) {
-        this.contenu = contenu;
-    }
-
-    /**
      * getter getdateenvoi
      *
      * @return date d'envoi du message
      */
     public LocalDate getDateEnvoi() {
         return dateEnvoi;
-    }
-
-    /**
-     * setter setdateenvoi
-     *
-     * @param dateEnvoi modifie la date d'envoi du message
-     */
-    public void setDateEnvoi(LocalDate dateEnvoi) {
-        this.dateEnvoi = dateEnvoi;
     }
 
     /**
@@ -149,30 +101,12 @@ public class Message {
     }
 
     /**
-     * setter setemetteur
-     *
-     * @param emetteur modifie l'employe qui envoie le message
-     */
-    public void setEmetteur(Employe emetteur) {
-        this.emetteur = emetteur;
-    }
-
-    /**
      * getter getl_infos
      *
      * @return la liste des infos du message
      */
     public List<Infos> getL_infos() {
         return l_infos;
-    }
-
-    /**
-     * setter setl_infos
-     *
-     * @param l_infos modifie la liste des infos du message
-     */
-    public void setL_infos(List<Infos> l_infos) {
-        this.l_infos = l_infos;
     }
 
     /**
@@ -189,5 +123,106 @@ public class Message {
                 ", dateEnvoi=" + dateEnvoi +
                 ", id emetteur=" + id_mess +
                 '}';
+    }
+
+    public static class MessageBuilder{
+        /**
+         * id unique du message
+         */
+        protected int id_mess;
+        /**
+         * objet du message
+         */
+        protected String objet;
+        /**
+         * contenu du message
+         */
+        protected String contenu;
+        /**
+         * date d'envoi du message
+         */
+        protected LocalDate dateEnvoi;
+        /**
+         * employe qui a envoyer le message
+         */
+
+        protected Employe emetteur;
+        protected int id_emp;
+        /**
+         * liste des infos du message
+         * infos contient l'employe qui recois le message et la date de lecture du message
+         * si la date de lecture est nulle alors le message n'a pas encore ete lu
+         */
+        protected List<Infos> l_infos = new ArrayList<>();
+
+        /**
+         * setter setid
+         *
+         * @param id_mess change l'id unique du message
+         */
+        public MessageBuilder setId(int id_mess) {
+            this.id_mess = id_mess;
+            return this;
+        }
+        /**
+         * setter setobjet
+         *
+         * @param objet modifie l'objet, l'intitule du message
+         */
+        public MessageBuilder setObjet(String objet) {
+            this.objet = objet;
+            return this;
+        }
+
+        /**
+         * setter setcontenu
+         *
+         * @param contenu modifie le contenu du message
+         */
+        public MessageBuilder setContenu(String contenu) {
+            this.contenu = contenu;
+            return this;
+        }
+
+        /**
+         * setter setdateenvoi
+         *
+         * @param dateEnvoi modifie la date d'envoi du message
+         */
+        public MessageBuilder setDateEnvoi(LocalDate dateEnvoi) {
+            this.dateEnvoi = dateEnvoi;
+            return this;
+        }
+
+        /**
+         * setter setemetteur
+         *
+         * @param emetteur modifie l'employe qui envoie le message
+         */
+        public MessageBuilder setEmetteur(Employe emetteur) {
+            this.emetteur = emetteur;
+            return this;
+        }
+
+        /**
+         * setter setl_infos
+         *
+         * @param l_infos modifie la liste des infos du message
+         */
+        public MessageBuilder setL_infos(List<Infos> l_infos) {
+            this.l_infos = l_infos;
+            return this;
+        }
+
+        public MessageBuilder setId_emp(int id_emp){
+            this.id_emp = id_emp;
+            return this;
+        }
+
+        public Message build() throws Exception{
+            /*if(l_infos.isEmpty()) throw new
+                    Exception("informations de construction incomplètes aka : linfos est vide");*/
+            return new Message(this);
+        }
     }
 }

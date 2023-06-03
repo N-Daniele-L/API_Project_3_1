@@ -30,7 +30,7 @@ public class MessageViewConsole implements MessageViewInterface{
     }
 
     @Override
-    public void setListDatas(List<Message> messages) {
+    public void setListDatas(List<Message> messages) throws Exception {
         this.lm = messages;
         affListe(lm);
         menu();
@@ -51,7 +51,7 @@ public class MessageViewConsole implements MessageViewInterface{
         int choix = Utilitaire.choixListe(lm);
         return lm.get(choix - 1);
     }
-    private void menu() {
+    private void menu() throws Exception {
         do {
 
             int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier", "special", "fin"));
@@ -77,14 +77,20 @@ public class MessageViewConsole implements MessageViewInterface{
         } while (true);
     }
 
-    private void ajouter() {
+    private void ajouter() throws Exception {
         LocalDate now = LocalDate.now();
         System.out.println("Entrez l'objet du message': ");
         String obj = sc.nextLine();
         System.out.println("Entrez le contenu du message");
         String cont = sc.nextLine();
 
-        presenter.addMessage(new Message(0,obj,cont,now,0));
+        presenter.addMessage(new Message.MessageBuilder()
+                .setId(0)
+                .setObjet(obj)
+                .setContenu(cont)
+                .setDateEnvoi(now)
+                .setId_emp(0)
+                .build());
         lm = presenter.getAll();
         affListe(lm);
     }
@@ -103,13 +109,19 @@ public class MessageViewConsole implements MessageViewInterface{
         presenter.search(id_mess);
     }
 
-    private void modifier() {
+    private void modifier() throws Exception {
         int nl = choixElt(lm) - 1;
         Message message= lm.get(nl);
         LocalDate now = LocalDate.now();
-        String objet = modifyIfNotBlank("mail" , message.getObjet());
-        String contenu = modifyIfNotBlank("nom", message.getContenu());
-        presenter.update(new Message(message.getId(),objet,contenu,now,0));
+        String objet = modifyIfNotBlank("objet" , message.getObjet());
+        String contenu = modifyIfNotBlank("contenu", message.getContenu());
+        presenter.update(new Message.MessageBuilder()
+                .setId(message.getId())
+                .setObjet(objet)
+                .setContenu(contenu)
+                .setDateEnvoi(now)
+                .setId_emp(0)
+                .build());
         lm = presenter.getAll();//rafraichissement
         affListe(lm);
     }

@@ -363,12 +363,20 @@ public class Gestion_Table_Employé {
                 int id_emp = rs.getInt(5);
 
 
-                Message ms= new Message(id_mess,obj,contenu,dateEnvoi,employe) ;
+                Message ms= new Message.MessageBuilder()
+                        .setId(id_mess)
+                        .setObjet(obj)
+                        .setContenu(contenu)
+                        .setDateEnvoi(dateEnvoi)
+                        .setEmetteur(employe)
+                        .build();
                 System.out.println(ms);
             }
             if(!trouve) System.out.println("aucun message trouvé");
         } catch (SQLException e) {
             System.out.println("erreur sql :"+e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
     private void messageReceived(Employe employe){

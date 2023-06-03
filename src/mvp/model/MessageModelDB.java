@@ -30,6 +30,7 @@ public class MessageModelDB implements DAOMessage{
 
     @Override
     public Message addMessage(Message mes) {
+        Message m;
         String query1 = "insert into APIMESSAGE (objet,contenu,id_employe,dateenvoi) VALUES (?, ?,?, CURRENT_DATE)";
         String query2 = "select id_message from APIMESSAGE where objet= ? and contenu = ? and date_envoi = CURRENT_DATE";
         try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
@@ -45,7 +46,12 @@ public class MessageModelDB implements DAOMessage{
                 ResultSet rs = pstm2.executeQuery();
                 if (rs.next()) {
                     int id_mes = rs.getInt(1);
-                    mes.setId(id_mes);
+                    m = new Message.MessageBuilder()
+                            .setId(id_mes)
+                            .setObjet(mes.getObjet())
+                            .setContenu(mes.getContenu())
+                            .setId_emp(mes.getEmetteur().getId())
+                            .build();
                     return mes;
                 } else {
                     logger.error("record introuvable");
@@ -58,6 +64,8 @@ public class MessageModelDB implements DAOMessage{
             //System.err.println("erreur sql :"+e);
             logger.error("erreur sql :" + e);
             return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -106,7 +114,13 @@ public class MessageModelDB implements DAOMessage{
                 String cont = rs.getString(3);
                 LocalDate date = rs.getDate(4).toLocalDate();
                 int id_emp = rs.getInt(5);
-                return new Message(id_mess,objet,cont,date,id_emp);
+                return new Message.MessageBuilder()
+                        .setId_emp(id_mess)
+                        .setObjet(objet)
+                        .setContenu(cont)
+                        .setDateEnvoi(date)
+                        .setId_emp(id_emp)
+                        .build();
 
             }
             else {
@@ -116,6 +130,8 @@ public class MessageModelDB implements DAOMessage{
             // System.err.println("erreur sql :"+e);
             logger.error("erreur SQL : "+e);
             return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -132,8 +148,13 @@ public class MessageModelDB implements DAOMessage{
                 LocalDate date = rs.getDate(4).toLocalDate();
                 int id_emp = rs.getInt(5);
 
-                Message mes = new Message(id_mess,objet,cont,date,id_emp);
-
+                Message mes = new Message.MessageBuilder()
+                        .setId(id_mess)
+                        .setObjet(objet)
+                        .setContenu(cont)
+                        .setDateEnvoi(date)
+                        .setId_emp(id_emp)
+                        .build();
                 lm.add(mes);
             }
             return lm;
@@ -141,6 +162,8 @@ public class MessageModelDB implements DAOMessage{
             //System.err.println("erreur sql :"+e);
             logger.error("erreur SQL : "+e);
             return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

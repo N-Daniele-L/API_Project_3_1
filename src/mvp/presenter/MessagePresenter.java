@@ -27,7 +27,7 @@ public class MessagePresenter {
         this.view = view;
         this.view.setPresenter(this);
     }
-    public void start() {
+    public void start() throws Exception {
         view.setListDatas(getAll());
     }
 
@@ -35,14 +35,22 @@ public class MessagePresenter {
         return model.getMessage();
     }
 
-    public void addMessage(Message message) {
+    public void addMessage(Message message) throws Exception {
+        Message me;
         Employe employe = employePresenter.selectionner();
         if(employe == null){
             view.affMsg("Erreur employe null");
             return;
         }
-        message.setEmetteur(employe);
-        Message m = model.addMessage(message);
+        me = new Message.MessageBuilder()
+                .setId(message.getId())
+                .setObjet(message.getObjet())
+                .setContenu(message.getContenu())
+                .setDateEnvoi(message.getDateEnvoi())
+                .setId_emp(message.getId())
+                .setEmetteur(employe)
+                .build();
+        Message m = model.addMessage(me);
         if(m!=null) view.affMsg("création de : "+m);
         else view.affMsg("erreur de création");
     }
