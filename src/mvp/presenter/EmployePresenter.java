@@ -30,21 +30,30 @@ public class EmployePresenter {
         this.view.setPresenter(this);
     }
 
-    public void start(){
+    public void start() throws Exception {
         view.setListDatas(getAll());
     }
 
     public List<Employe> getAll(){
         return model.getEmploye();
     }
-    public void addEmploye(Employe employe) {
+    public void addEmploye(Employe employe) throws Exception {
+        Employe emp;
         Bureau bureau = bureauPresenter.selectionner();
         if (bureau == null){
             view.affMsg("Erreur bureau null");
             return;
         }
-        employe.setBureau(bureau);
-        Employe em = model.addEmploye(employe);
+
+        emp = new Employe.EmployeBuilder()
+                .setId(employe.getId())
+                .setNom(employe.getNom())
+                .setPrenom(employe.getPrenom())
+                .setMail(employe.getMail())
+                .setId_bur(employe.getIdBur())
+                .setBureau(bureau)
+                .build();
+        Employe em = model.addEmploye(emp);
         if(em!=null) view.affMsg("création de : "+em);
         else view.affMsg("erreur de création");
 
@@ -63,9 +72,18 @@ public class EmployePresenter {
         return em;
     }
 
-    public void update(Employe employe) {
-
-        Employe em =model.updateEmploye(employe);
+    public void update(Employe employe) throws Exception {
+        Employe emp;
+        Bureau bureau = bureauPresenter.selectionner();
+        emp = new Employe.EmployeBuilder()
+                .setId(employe.getId())
+                .setNom(employe.getNom())
+                .setPrenom(employe.getPrenom())
+                .setMail(employe.getMail())
+                .setId_bur(employe.getIdBur())
+                .setBureau(bureau)
+                .build();
+        Employe em = model.updateEmploye(emp);
         if(em==null) view.affMsg("mise à jour infrucueuse");
         else view.affMsg("mise à jour effectuée : "+em);
     }

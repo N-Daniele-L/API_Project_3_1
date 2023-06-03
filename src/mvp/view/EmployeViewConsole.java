@@ -29,7 +29,7 @@ public class EmployeViewConsole implements EmployeViewInterface{
     }
 
     @Override
-    public void setListDatas(List<Employe> employes) {
+    public void setListDatas(List<Employe> employes) throws Exception {
         this.lem = employes;
         affListe(lem);
         menu();
@@ -52,7 +52,7 @@ public class EmployeViewConsole implements EmployeViewInterface{
 
 
 
-    public void menu() {
+    public void menu() throws Exception {
         do {
 
             int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier", "special", "fin"));
@@ -78,7 +78,7 @@ public class EmployeViewConsole implements EmployeViewInterface{
         } while (true);
     }
 
-    private void ajouter() {
+    private void ajouter() throws Exception {
         System.out.println("Entrez le nom de l'employé : ");
         String nomEmp = sc.nextLine();
         System.out.println("Entrez le prenom de l'employé : ");
@@ -87,7 +87,13 @@ public class EmployeViewConsole implements EmployeViewInterface{
         String mailEmp = sc.nextLine();
         System.out.println("Voici les id de bureau disponible : ");
 
-        presenter.addEmploye(new Employe(0,mailEmp,nomEmp,prenomEmp,0));
+        presenter.addEmploye(new Employe.EmployeBuilder()
+                        .setId(0)
+                        .setMail(mailEmp)
+                        .setNom(nomEmp)
+                        .setPrenom(prenomEmp)
+                        .setId_bur(0)
+                        .build());
         lem = presenter.getAll();
         affListe(lem);
 
@@ -107,13 +113,19 @@ public class EmployeViewConsole implements EmployeViewInterface{
         presenter.search(idEm);
     }
 
-    private void modifier() {
+    private void modifier() throws Exception {
         int nl = choixElt(lem) - 1;
         Employe employe = lem.get(nl);
         String mailEmp = modifyIfNotBlank("mail" , employe.getMail());
         String nomEmp = modifyIfNotBlank("nom", employe.getNom());
         String prenomEmp = modifyIfNotBlank("prénom", employe.getPrenom());
-        presenter.update(new Employe(employe.getId(),mailEmp,nomEmp,prenomEmp,0));
+        presenter.update(new Employe.EmployeBuilder()
+                .setId(employe.getId())
+                .setMail(mailEmp)
+                .setNom(nomEmp)
+                .setPrenom(prenomEmp)
+                .setId_bur(0)
+                .build());
         lem = presenter.getAll();//rafraichissement
         affListe(lem);
     }

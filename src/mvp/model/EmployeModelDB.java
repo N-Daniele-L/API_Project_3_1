@@ -29,6 +29,7 @@ public class EmployeModelDB implements DAOEmploye, EmployeSpecial{
 
     @Override
     public Employe addEmploye(Employe employe) {
+        Employe emp;
         String query1 = "insert into APIEMPLOYE (mail_emp,nom,prenom,id_bureau) VALUES (?, ?, ?, ?)";
         String query2 = "select id_employe from APIEMPLOYE where nom= ? and prenom =? and mail_emp =?";
         try (PreparedStatement pstm1 = dbConnect.prepareStatement(query1);
@@ -46,8 +47,14 @@ public class EmployeModelDB implements DAOEmploye, EmployeSpecial{
                 ResultSet rs = pstm2.executeQuery();
                 if (rs.next()) {
                     int id_emp = rs.getInt(1);
-                    employe.setId(id_emp);
-                    return employe;
+                    emp = new Employe.EmployeBuilder()
+                            .setId(id_emp)
+                            .setMail(employe.getMail())
+                            .setNom(employe.getNom())
+                            .setPrenom(employe.getPrenom())
+                            .setId_bur(employe.getBureau().getId())
+                            .build();
+                    return emp;
                 } else {
                     logger.error("record introuvable");
                     //  System.err.println("record introuvable");
@@ -59,6 +66,8 @@ public class EmployeModelDB implements DAOEmploye, EmployeSpecial{
             //System.err.println("erreur sql :"+e);
             logger.error("erreur sql :" + e);
             return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -108,7 +117,13 @@ public class EmployeModelDB implements DAOEmploye, EmployeSpecial{
                 String nom = rs.getString(3);
                 String prenom = rs.getString(4);
                 int id_bur = rs.getInt(5);
-                return new Employe(idEmp,mail,nom,prenom,id_bur);
+                return new Employe.EmployeBuilder()
+                        .setId(idEmp)
+                        .setMail(mail)
+                        .setNom(nom)
+                        .setPrenom(prenom)
+                        .setId_bur(id_bur)
+                        .build();
 
             }
             else {
@@ -118,6 +133,8 @@ public class EmployeModelDB implements DAOEmploye, EmployeSpecial{
             // System.err.println("erreur sql :"+e);
             logger.error("erreur SQL : "+e);
             return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -134,7 +151,13 @@ public class EmployeModelDB implements DAOEmploye, EmployeSpecial{
                 String nom = rs.getString(3);
                 String prenom = rs.getString(4);
                 int id_bur = rs.getInt(5);
-                Employe em = new Employe(id_emp,mail,nom,prenom,id_bur);
+                Employe em = new Employe.EmployeBuilder()
+                        .setId(id_emp)
+                        .setMail(mail)
+                        .setNom(nom)
+                        .setPrenom(prenom)
+                        .setId_bur(id_bur)
+                        .build();
                 lc.add(em);
             }
             return lc;
@@ -142,7 +165,12 @@ public class EmployeModelDB implements DAOEmploye, EmployeSpecial{
             //System.err.println("erreur sql :"+e);
             logger.error("erreur SQL : "+e);
             return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
+    }
+
+    private void build() {
     }
 
     @Override

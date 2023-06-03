@@ -16,54 +16,42 @@ public class Employe {
     /**
      * id unique de l'employe
      */
-    private int id_emp;
+    protected int id_emp;
     /**
      * adresse mail unique de l'employe
      */
-    private String mail;
+    protected String mail;
     /**
      * nom de l'employe
      */
-    private String nom;
+    protected String nom;
     /**
      * prenom de l'employe
      */
-    private String prenom;
+    protected String prenom;
     /**
      * bureau ou l'employe travaille
      */
-    private Bureau bureau;
-    private int id_bur;
-
-    public int getId_emp() {
-        return id_emp;
-    }
-
-    public int getId_bur() {
-        return id_bur;
-    }
-
+    protected Bureau bureau;
+    protected int id_bur;
     /**
      * message que l'employe a ecrit
      */
-    private List<Message> msg = new ArrayList<>();
+    protected List<Message> msg = new ArrayList<>();
 
     /**
      * constructeur parametre
      *
-     * @param id_emp id numerique unique de l'employe
-     * @param mail   adresse mail unique de l'employe
-     * @param nom    nom de l'employe
-     * @param prenom prenom de l'employe
-
+     * @param eb objet de la classe EmployeBuilder
      */
 
-    public Employe(int id_emp, String mail, String nom, String prenom, int id_bur) {
-        this.id_emp = id_emp;
-        this.mail = mail;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.id_bur = id_bur;
+    public Employe(EmployeBuilder eb) {
+        this.id_emp = eb.id_emp;
+        this.mail = eb.mail;
+        this.nom = eb.nom;
+        this.prenom = eb.prenom;
+        this.id_bur = eb.id_bur;
+        this.bureau = eb.bureau;
     }
 
     /**
@@ -76,30 +64,12 @@ public class Employe {
     }
 
     /**
-     * setter setid
-     *
-     * @param id_emp changement de l'id unique de l'employe
-     */
-    public void setId(int id_emp) {
-        this.id_emp = id_emp;
-    }
-
-    /**
      * getter getmail
      *
      * @return adresse mail unique de l'employe
      */
     public String getMail() {
         return mail;
-    }
-
-    /**
-     * setter setmail
-     *
-     * @param mail changement du mail unique de l'employe
-     */
-    public void setMail(String mail) {
-        this.mail = mail;
     }
 
     /**
@@ -114,14 +84,6 @@ public class Employe {
     public int getIdBur(){
         return id_bur;
     }
-    /**
-     * setter setnom
-     *
-     * @param nom de l'employe
-     */
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
 
     /**
      * getter getprenom
@@ -133,30 +95,13 @@ public class Employe {
     }
 
     /**
-     * setter setprenom
-     *
-     * @param prenom de l'employe
-     */
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
-    /**
      * getter getmsg
      *
      * @return la liste des messages ecrit de l'employe
      */
+
     public List<Message> getMsg() {
         return msg;
-    }
-
-    /**
-     * setter setmsg
-     *
-     * @param msg modifie la liste des messages ecrit de l'employe
-     */
-    public void setMsg(List<Message> msg) {
-        this.msg = msg;
     }
 
     /**
@@ -168,13 +113,8 @@ public class Employe {
         return bureau;
     }
 
-    /**
-     * setter setbureau
-     *
-     * @param bureau modifie le bureau de l'employe ou il travaille
-     */
-    public void setBureau(Bureau bureau) {
-        this.bureau = bureau;
+    public int getId_emp() {
+        return id_emp;
     }
 
     /**
@@ -215,6 +155,101 @@ public class Employe {
                 ", prenom='" + prenom + '\'' +
                 ", bureau=" + id_bur +
                 '}';
+    }
+    public static class EmployeBuilder{
+        /**
+         * id unique de l'employe
+         */
+        protected int id_emp;
+        /**
+         * adresse mail unique de l'employe
+         */
+        protected String mail;
+        /**
+         * nom de l'employe
+         */
+        protected String nom;
+        /**
+         * prenom de l'employe
+         */
+        protected String prenom;
+        /**
+         * bureau ou l'employe travaille
+         */
+        protected Bureau bureau;
+        protected int id_bur;
+
+        /**
+         * message que l'employe a ecrit
+         */
+        protected List<Message> msg = new ArrayList<>();
+
+        /**
+         * setter setid
+         *
+         * @param id_emp changement de l'id unique de l'employe
+         */
+        public EmployeBuilder setId(int id_emp) {
+            this.id_emp = id_emp;
+            return this;
+        }
+        /**
+         * setter setmail
+         *
+         * @param mail changement du mail unique de l'employe
+         */
+        public EmployeBuilder setMail(String mail) {
+            this.mail = mail;
+            return this;
+        }
+
+        /**
+         * setter setnom
+         *
+         * @param nom de l'employe
+         */
+        public EmployeBuilder setNom(String nom) {
+            this.nom = nom;
+            return this;
+        }
+
+        /**
+         * setter setprenom
+         *
+         * @param prenom de l'employe
+         */
+        public EmployeBuilder setPrenom(String prenom) {
+            this.prenom = prenom;
+            return this;
+        }
+
+        /**
+         * setter setmsg
+         *
+         * @param msg modifie la liste des messages ecrit de l'employe
+         */
+        public EmployeBuilder setMsg(List<Message> msg) {
+            this.msg = msg;
+            return this;
+        }
+        /**
+         * setter setbureau
+         *
+         * @param bureau modifie le bureau de l'employe ou il travaille
+         */
+        public EmployeBuilder setBureau(Bureau bureau) {
+            this.bureau = bureau;
+            return this;
+        }
+        public EmployeBuilder setId_bur(int id_bur) {
+            this.id_bur = id_bur;
+            return this;
+        }
+        public Employe build() throws Exception{
+            /*if(nom==null || prenom==null) throw new
+                    Exception("informations de construction incomplètes");*/
+            return new Employe(this);
+        }
     }
 }
 
