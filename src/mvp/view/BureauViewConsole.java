@@ -7,6 +7,7 @@ import mvp.presenter.BureauPresenter;
 import utilitaires.Utilitaire;
 
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -50,32 +51,33 @@ public class BureauViewConsole implements BureauViewInterface{
     }
 
     private void menu() throws Exception {
+        try{
         do {
-
-            int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier", "special", "fin"));
-            switch (ch) {
-                case 1:
-                    ajouter();
-                    break;
-                case 2:
-                    retirer();
-                    break;
-                case 3:
-                    rechercher();
-                    break;
-                case 4:
-                    modifier();
-                    break;
-                case 5:
-                    special();
-                    break;
-                case 6:
-                    return;
-            }
+                int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier","fin"));
+                switch (ch) {
+                    case 1:
+                        ajouter();
+                        break;
+                    case 2:
+                        retirer();
+                        break;
+                    case 3:
+                        rechercher();
+                        break;
+                    case 4:
+                        modifier();
+                        break;
+                    case 5:
+                        return;
+                }
         } while (true);
+        }catch (InputMismatchException e){
+            System.out.println("erreur " + e);
+        }
     }
 
     private void ajouter() throws Exception {
+        try{
         System.out.println("Entrez le sigle du bureau : ");
         String sigle = sc.nextLine();
         System.out.println("Entrez le numéro de téléphone du bureau");
@@ -87,21 +89,33 @@ public class BureauViewConsole implements BureauViewInterface{
                 .build());
         lb = presenter.getAll();
         affListe(lb);
+        }catch (InputMismatchException e){
+            System.out.println("erreur " + e);
+        }
     }
 
     private void retirer() {
+        try{
         int nl = choixElt(lb)-1;
         Bureau bureau = lb.get(nl);
         presenter.removeBureau(bureau);
         lb = presenter.getAll();//rafraichissement
         affListe(lb);
+        }catch (InputMismatchException e){
+            System.out.println("erreur " + e);
+        }
     }
     private void rechercher() {
+        try{
         System.out.println("id du bureau: ");
         int idBur = sc.nextInt();
         presenter.search(idBur);
+        }catch (InputMismatchException e){
+            System.out.println("erreur " + e);
+        }
     }
     private void modifier() throws Exception {
+        try{
         int nl = choixElt(lb) - 1;
         Bureau bureau = lb.get(nl);
         String sigle = modifyIfNotBlank("mail" , bureau.getSigle());
@@ -113,6 +127,9 @@ public class BureauViewConsole implements BureauViewInterface{
                 .build());
         lb = presenter.getAll();//rafraichissement
         affListe(lb);
+        }catch (InputMismatchException e){
+            System.out.println("erreur " + e);
+        }
     }
 
     private void special() {

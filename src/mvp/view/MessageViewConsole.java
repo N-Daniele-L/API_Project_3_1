@@ -7,6 +7,7 @@ import mvp.presenter.MessagePresenter;
 import utilitaires.Utilitaire;
 
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -54,7 +55,7 @@ public class MessageViewConsole implements MessageViewInterface{
     private void menu() throws Exception {
         do {
 
-            int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier", "special", "fin"));
+            int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier","fin"));
             switch (ch) {
                 case 1:
                     ajouter();
@@ -69,15 +70,13 @@ public class MessageViewConsole implements MessageViewInterface{
                     modifier();
                     break;
                 case 5:
-                    special();
-                    break;
-                case 6:
                     return;
             }
         } while (true);
     }
 
     private void ajouter() throws Exception {
+        try{
         LocalDate now = LocalDate.now();
         System.out.println("Entrez l'objet du message': ");
         String obj = sc.nextLine();
@@ -93,23 +92,35 @@ public class MessageViewConsole implements MessageViewInterface{
                 .build());
         lm = presenter.getAll();
         affListe(lm);
+        }catch (InputMismatchException e){
+            System.out.println("erreur " + e);
+        }
     }
 
     private void retirer() {
+        try{
         int nl = choixElt(lm)-1;
         Message message = lm.get(nl);
         presenter.removeMessage(message);
         lm = presenter.getAll();//rafraichissement
         affListe(lm);
+        }catch (InputMismatchException e){
+            System.out.println("erreur " + e);
+        }
     }
 
     private void rechercher() {
+        try{
         System.out.println("id du message: ");
         int id_mess = sc.nextInt();
         presenter.search(id_mess);
+        }catch (InputMismatchException e){
+            System.out.println("erreur " + e);
+        }
     }
 
     private void modifier() throws Exception {
+        try{
         int nl = choixElt(lm) - 1;
         Message message= lm.get(nl);
         LocalDate now = LocalDate.now();
@@ -124,6 +135,9 @@ public class MessageViewConsole implements MessageViewInterface{
                 .build());
         lm = presenter.getAll();//rafraichissement
         affListe(lm);
+        }catch (InputMismatchException e){
+            System.out.println("erreur " + e);
+        }
     }
 
     private void special() {

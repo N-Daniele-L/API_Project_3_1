@@ -7,9 +7,10 @@ import mvp.view.*;
 import utilitaires.Utilitaire;
 
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 
-public class GestEmploye {
+public class GestionMVP {
     private DAOEmploye cm;
     private EmployePresenter cp;
     private EmployeViewInterface cv;
@@ -50,23 +51,33 @@ public class GestEmploye {
 
 
         List<String> loptions = Arrays.asList("Employe","Bureau","Messages","Infos","Fin");
+        try{
         do {
-            int ch = Utilitaire.choixListe(loptions);
-            switch (ch){
-                case 1: cp.start();
-                    break;
-                case 2 : bp.start();
-                    break;
-                case 3: mp.start();
-                    break;
-                case 4: ip.start();
-                    break;
-                case 5: System.exit(0);
-            }
+                int ch = Utilitaire.choixListe(loptions);
+                switch (ch) {
+                    case 1:
+                        cp.start();
+                        break;
+                    case 2:
+                        bp.start();
+                        break;
+                    case 3:
+                        mp.start();
+                        break;
+                    case 4:
+                        ip.start();
+                        break;
+                    case 5:
+                        System.exit(0);
+                }
+
         }while(true);
+    }catch (InputMismatchException e){
+        System.out.println("erreur " + e);
+    }
     }
     public static void main(String[] args) throws Exception {
-        GestEmploye ge = new GestEmploye();
+        GestionMVP ge = new GestionMVP();
         ge.gestion();
     }
 }

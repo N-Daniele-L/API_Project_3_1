@@ -9,6 +9,7 @@ import mvp.presenter.BureauPresenter;
 import utilitaires.Utilitaire;
 
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -55,7 +56,7 @@ public class EmployeViewConsole implements EmployeViewInterface{
     public void menu() throws Exception {
         do {
 
-            int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier", "special", "fin"));
+            int ch = choixListe(Arrays.asList("ajout", "retrait", "rechercher", "modifier","fin"));
             switch (ch) {
                 case 1:
                     ajouter();
@@ -70,15 +71,13 @@ public class EmployeViewConsole implements EmployeViewInterface{
                     modifier();
                     break;
                 case 5:
-                    special();
-                    break;
-                case 6:
                     return;
             }
         } while (true);
     }
 
     private void ajouter() throws Exception {
+        try{
         System.out.println("Entrez le nom de l'employé : ");
         String nomEmp = sc.nextLine();
         System.out.println("Entrez le prenom de l'employé : ");
@@ -96,24 +95,35 @@ public class EmployeViewConsole implements EmployeViewInterface{
                         .build());
         lem = presenter.getAll();
         affListe(lem);
-
+        }catch (InputMismatchException e){
+            System.out.println("erreur " + e);
+        }
     }
 
     private void retirer() {
+        try{
         int nl = choixElt(lem)-1;
         Employe employe = lem.get(nl);
         presenter.removeEmploye(employe);
         lem = presenter.getAll();//rafraichissement
         affListe(lem);
+        }catch (InputMismatchException e){
+            System.out.println("erreur " + e);
+        }
     }
 
     private void rechercher() {
+        try{
         System.out.println("id de l'employé: ");
         int idEm = sc.nextInt();
         presenter.search(idEm);
+        }catch (InputMismatchException e){
+            System.out.println("erreur " + e);
+        }
     }
 
     private void modifier() throws Exception {
+        try{
         int nl = choixElt(lem) - 1;
         Employe employe = lem.get(nl);
         String mailEmp = modifyIfNotBlank("mail" , employe.getMail());
@@ -128,6 +138,9 @@ public class EmployeViewConsole implements EmployeViewInterface{
                 .build());
         lem = presenter.getAll();//rafraichissement
         affListe(lem);
+        }catch (InputMismatchException e){
+            System.out.println("erreur " + e);
+        }
     }
 
     private void special() {
